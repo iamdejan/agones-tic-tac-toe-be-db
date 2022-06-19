@@ -1,22 +1,17 @@
 import express from "express";
 import http from "http2";
-import mongoose from "mongoose";
+import handleRoutes from "./handlers";
+import connectToDatabase from "./utils/mongo.utility";
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded());
+
 const server = http.createServer(app);
 
-app.get("/healthcheck", (req, res) => {
-  res.send({ status: "UP" });
-});
+connectToDatabase();
 
-const username = "test";
-const password = "test";
-mongoose.connect(
-  `mongodb+srv://${username}:${password}@agonestictactoe.0deyc.mongodb.net/?retryWrites=true&w=majority`,
-  () => {
-    console.log("connected to MongoDB");
-  }
-);
+handleRoutes(app);
 
 app.listen(3002, () => {
   console.log("listening on *:3002");
