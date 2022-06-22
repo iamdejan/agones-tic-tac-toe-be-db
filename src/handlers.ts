@@ -17,8 +17,16 @@ function createGame(request: Request, response: Response) {
   });
 }
 
+function getGame(request: Request, response: Response) {
+  const gameId: string = request.params["id"];
+  GameSchema.findOne({id: gameId}).then((game) => {
+    response.json(game);
+  });
+}
+
 export default function handleRoutes(app: Express) {
   app.get("/healthcheck", healthcheck);
 
   app.post("/games", createGame);
+  app.post("/games/:id", getGame);
 }
