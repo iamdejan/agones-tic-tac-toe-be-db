@@ -28,5 +28,5 @@ export default function handleRoutes(app: Express) {
   app.get("/healthcheck", healthcheck);
 
   app.post("/games", createGame);
-  app.post("/games/:id", getGame);
+  app.get("/games/:id", getGame);
 }
